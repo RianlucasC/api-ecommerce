@@ -58,7 +58,14 @@ class UserController {
         return res.status(200).json({token: token});
     };
 
+    async index(req, res) {
+        if(req.user.isAdmin !== true) {
+            throw new AppError("you do not have permission to access this route", 403);
+        }
 
+        const users = await User.find();
+        res.json(users);
+    }
 };
 
 module.exports = UserController;
