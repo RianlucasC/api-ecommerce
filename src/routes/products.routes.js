@@ -6,6 +6,7 @@ const verifyToken = require("../middlewares/VerifyToken");
 const productRoutes = Router();
 const productController = new ProductController();
 
-productRoutes.post('/', verifyToken, productController.create)
+productRoutes.get('/', productController.index);
+productRoutes.post('/', verifyToken, productController.create);
 
 module.exports = productRoutes;

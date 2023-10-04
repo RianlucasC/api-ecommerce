@@ -24,6 +24,11 @@ class ProductController {
         });
 
         return res.status(201).json(product);
+    };
+
+    async index(req, res) {
+        const products = await Product.find();
+        res.json(products);
     }
 };
 
