@@ -48,7 +48,27 @@ class ProductController {
         return res.json(product);
     };
 
-    
+    async delete(req, res) {
+        const { id } = req.params;
+        const { isAdmin } = req.user;
+        
+        if (!isAdmin) {
+            throw new AppError("you do not have permission to access this route", 403);
+        };
+
+        if(!mongoose.Types.ObjectId.isValid(id)){
+            throw new AppError("invalid id");
+        }
+
+        const product = await Product.findById(id);
+
+        if(!product) {
+            throw new AppError("product not found", 404);
+        };
+
+        await Product.findByIdAndDelete(id);
+        res.json();
+    }
 };
 
 module.exports = ProductController;

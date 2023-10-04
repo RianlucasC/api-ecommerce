@@ -9,5 +9,6 @@ const productController = new ProductController();
 productRoutes.get('/', productController.index);
 productRoutes.get('/:id', productController.show);
 productRoutes.post('/', verifyToken, productController.create);
+productRoutes.delete('/:id', verifyToken, productController.delete);
 
 module.exports = productRoutes;
