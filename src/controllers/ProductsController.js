@@ -1,5 +1,6 @@
 const AppError = require("../utils/AppError");
 const Product = require("../database/models/Product");
+const mongoose = require("mongoose")
 
 class ProductController {
     async create(req, res) {
@@ -28,8 +29,26 @@ class ProductController {
 
     async index(req, res) {
         const products = await Product.find();
-        res.json(products);
-    }
+        return res.json(products);
+    };
+
+    async show(req, res) {
+        const { id } = req.params;
+
+        if(!mongoose.Types.ObjectId.isValid(id)){
+            throw new AppError("invalid id");
+        }
+
+        const product = await Product.findById(id);
+
+        if(!product) {
+            throw new AppError("product not found", 404);
+        };
+
+        return res.json(product);
+    };
+
+    
 };
 
 module.exports = ProductController;

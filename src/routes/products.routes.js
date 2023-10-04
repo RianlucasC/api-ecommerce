@@ -7,6 +7,7 @@ const productRoutes = Router();
 const productController = new ProductController();
 
 productRoutes.get('/', productController.index);
+productRoutes.get('/:id', productController.show);
 productRoutes.post('/', verifyToken, productController.create);
 
 module.exports = productRoutes;
