@@ -65,6 +65,21 @@ class UserController {
 
         const users = await User.find();
         res.json(users);
+    };
+
+    async delete(req, res) {
+        const { id } = req.user;
+        const { password } = req.body;
+
+        const user = await User.findById(id);
+        const passwordMatch = await bcrypt.compare(password, user.password_hash);
+
+        if (!passwordMatch) {
+            throw new AppError("wrong password");
+        };
+
+        await User.findByIdAndDelete(id);
+        res.json();
     }
 };
 
