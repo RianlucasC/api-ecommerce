@@ -67,6 +67,20 @@ class UserController {
         res.json(users);
     };
 
+    async update(req, res) {
+        const { id } = req.user;
+        const {name, email, password} = req.body;
+
+        const hashedPassord = await bcrypt.hash(password, 8);
+
+        const updatedUser = await User.findByIdAndUpdate({_id: id}, {
+            name,
+            email,
+            password: hashedPassord
+        });
+        return res.json();
+    }
+
     async delete(req, res) {
         const { id } = req.user;
         const { password } = req.body;
@@ -80,7 +94,7 @@ class UserController {
 
         await User.findByIdAndDelete(id);
         res.json();
-    }
+    };
 };
 
 module.exports = UserController;

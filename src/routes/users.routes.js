@@ -9,5 +9,6 @@ userRoutes.post('/register', usersController.create);
 userRoutes.post('/login', usersController.login);
 userRoutes.get('/', verifyToken, usersController.index);
 userRoutes.delete('/', verifyToken, usersController.delete);
+userRoutes.put('/', verifyToken, usersController.update);
 
 module.exports = userRoutes;
