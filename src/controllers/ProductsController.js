@@ -68,6 +68,23 @@ class ProductController {
 
         await Product.findByIdAndDelete(id);
         res.json();
+    };
+
+    async update(req, res) {
+        if(req.user.isAdmin === true) {
+            const { id } = req.params;
+            const product = await Product.findById(id);
+
+            if (!product) {
+                throw new AppError("product not found");
+            };
+
+            const updatedProduct = await Product.findByIdAndUpdate(id, req.body);
+            return res.json();
+
+        }else {
+            throw new AppError("you do not have permission");
+        }
     }
 };
 
