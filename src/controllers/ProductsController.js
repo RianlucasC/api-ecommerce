@@ -29,15 +29,19 @@ class ProductController {
 
     async index(req, res) {
         const { ids } = req.body;
+        const { category } = req.query;
         let products;
 
         if (ids) {
             products = await Product.find({ _id: { $in: ids } });
+            return res.json(products);
+        } else if (category) {
+            products = await Product.find({ categories: category });
+            return res.json(products);
         } else {
             products = await Product.find();
+            return res.json(products);
         }
-
-        return res.json(products);
     };
 
     async show(req, res) {
