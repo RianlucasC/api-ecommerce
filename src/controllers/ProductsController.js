@@ -28,14 +28,13 @@ class ProductController {
     };
 
     async index(req, res) {
-        const { id } = req.params;
         const { ids } = req.body;
         let products;
 
         if (ids) {
             products = await Product.find({ _id: { $in: ids } });
         } else {
-            products = await Product.find(id);
+            products = await Product.find();
         }
 
         return res.json(products);
