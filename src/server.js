@@ -3,11 +3,14 @@ const express = require("express");
 const routes = require("./routes");
 const AppError = require("./utils/AppError");
 const connection = require("./database/connection");
+const cors = require("cors");
 
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use(routes);
+
 
 app.use((error, request, response, next) => {
     if (error instanceof AppError) {
