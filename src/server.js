@@ -10,6 +10,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(routes);
+const port = process.env.PORT || 5000;
 
 
 app.use((error, request, response, next) => {
@@ -30,6 +31,6 @@ app.use((error, request, response, next) => {
 
 connection();
 
-app.listen(5000, () => {
-    console.log('rodando na porta 5000');
+app.listen(port, () => {
+    console.log('rodando');
 });
